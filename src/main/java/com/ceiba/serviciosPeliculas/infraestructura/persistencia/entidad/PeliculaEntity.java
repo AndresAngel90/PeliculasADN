@@ -10,6 +10,10 @@ import javax.persistence.NamedQuery;
 @NamedQuery(name = "Pelicula.listar" , query = "SELECT p "
 		+ "FROM Peliculas p "
 		+ "where p.stock  > 0")
+
+@NamedQuery(name = "Pelicula.byID" , query = "SELECT p "
+		+ "FROM Peliculas p "
+		+ "where p.id = :idPelicula")
 public class PeliculaEntity {
 	
 	
