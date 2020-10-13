@@ -57,6 +57,9 @@ pipeline {
     stage('Build') {
       steps {
         echo "------------>Build<------------"
+        
+        sh 'gradle --b ./build.gradle clean compileJava'
+        
         sh 'gradle --b ./build.gradle build -x test'
         
         
