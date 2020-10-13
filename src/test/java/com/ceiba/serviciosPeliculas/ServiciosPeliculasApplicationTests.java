@@ -1,13 +1,10 @@
 package com.ceiba.serviciosPeliculas;
 
+import org.junit.Test;
 
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-class ServiciosPeliculasApplicationTests {
-
-	
-	void contextLoads() {
+public class ServiciosPeliculasApplicationTests {
+	@Test
+	public void contextLoads() {
 	}
 
 }
