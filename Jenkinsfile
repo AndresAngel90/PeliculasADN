@@ -12,8 +12,8 @@ pipeline {
 
   //Una sección que define las herramientas “preinstaladas” en Jenkins
   tools {
-    jdk 'JDK1.8' //Preinstalada en la Configuración del Master
-    gradle 'Gradle6.7-rc-4' //Preinstalada en la Configuración del Master
+    jdk 'JDK8_Centos' //Preinstalada en la Configuración del Master
+    gradle 'Gradle6.7_Centos' //Preinstalada en la Configuración del Master
   }
 
   //Aquí comienzan los “items” del Pipeline
@@ -40,7 +40,7 @@ pipeline {
     stage('Compile & Unit Tests') {
       steps{
         echo "------------>Unit Tests<------------"        
-        sh 'gradle --b ./build.gradle clean'
+        
 		sh 'gradle --b ./build.gradle test'
       }
     }
