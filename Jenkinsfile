@@ -42,6 +42,7 @@ pipeline {
         echo "------------>Unit Tests<------------"        
         
 		sh 'gradle --b ./build.gradle test'
+		sh 'gradle --b ./build.gradle jacocoTestReport'
       }
     }
 
