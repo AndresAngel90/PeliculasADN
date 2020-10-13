@@ -12,6 +12,7 @@ public final class AlquilerDTObuilder {
 		alquilerDTO.setIdPelicula(peliculaEntity.getId());
 		alquilerDTO.setNombrePelicula(peliculaEntity.getNombre());
 		alquilerDTO.setUrlImagen(peliculaEntity.getImageUrl());
+		alquilerDTO.setFechaEstrenoAlquiler(peliculaEntity.getFechaEstreno());
 		
 		return alquilerDTO;
 		

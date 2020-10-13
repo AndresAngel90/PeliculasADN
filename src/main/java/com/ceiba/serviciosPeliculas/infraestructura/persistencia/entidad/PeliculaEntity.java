@@ -14,6 +14,10 @@ import javax.persistence.NamedQuery;
 @NamedQuery(name = "Pelicula.byID" , query = "SELECT p "
 		+ "FROM Peliculas p "
 		+ "where p.id = :idPelicula")
+
+@NamedQuery(name = "AlquilarPelicula.byID" , query = "UPDATE Peliculas p "
+		+ "SET p.stock = stock - 1 "
+		+ "WHERE p.id = :idPelicula")
 public class PeliculaEntity {
 	
 	

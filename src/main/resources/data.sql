@@ -6,3 +6,9 @@ VALUES (20, 'Matrix Reloaded', '07/05/2003', 7, 'alguna img');
 
 INSERT INTO peliculas(ID, NOMBRE, FECHA_ESTRENO, STOCK, IMAGE_URL)
 VALUES (30, 'Matrix Revolutions', '27/10/2003', 7, 'alguna img');
+
+INSERT INTO peliculas(ID, NOMBRE, FECHA_ESTRENO, STOCK, IMAGE_URL)
+VALUES (40, 'Wonder Woman 1984', '10/05/2020', 4, 'alguna img');
+
+INSERT INTO peliculas(ID, NOMBRE, FECHA_ESTRENO, STOCK, IMAGE_URL)
+VALUES (50, 'Justice League The Snyder cut', '07/10/2020', 2, 'alguna img');

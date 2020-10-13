@@ -8,6 +8,16 @@ public class AlquilerDTO {
 	
 	String fechaDevolucion;
 	
+	String fechaEstrenoAlquiler;
+	
+	public String getFechaEstrenoAlquiler() {
+		return fechaEstrenoAlquiler;
+	}
+
+	public void setFechaEstrenoAlquiler(String fechaEstrenoAlquiler) {
+		this.fechaEstrenoAlquiler = fechaEstrenoAlquiler;
+	}
+
 	String urlImagen;
 	
 	Integer tarifa;
