@@ -41,7 +41,7 @@ pipeline {
       steps{
         echo "------------>Unit Tests<------------"
         
-        sh 'gradle --b ./proyecto1/build.gradle clean'
+        sh 'gradle --b ./build.gradle clean'
         sh 'gradle --b ./build.gradle clean compileJava'
 		sh 'gradle --b ./build.gradle test'
       }
