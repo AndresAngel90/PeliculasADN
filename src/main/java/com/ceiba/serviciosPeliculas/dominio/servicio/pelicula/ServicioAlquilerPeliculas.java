@@ -32,13 +32,11 @@ public class ServicioAlquilerPeliculas {
 		
 		AlquilerDTO alquilerDTO =  new AlquilerDTO();
 		
-		Date fechaActual = new Date();
-		
 		alquilerDTO = alquilerRepository.alquilerInfo(idPelicula);
 		
 		alquilerDTO.setTarifa(calculoTarifa(alquilerDTO.getFechaEstrenoAlquiler()));
 		
-		alquilerDTO.setFechaDevolucion(calculoFechaDevolucion(fechaActual));
+		alquilerDTO.setFechaDevolucion(calculoFechaDevolucion());
 		
 		return alquilerDTO;
 	}
@@ -77,7 +75,7 @@ public class ServicioAlquilerPeliculas {
 		
 	}
 	
-	public String calculoFechaDevolucion(Date fechaActual) {
+	public String calculoFechaDevolucion() {
 		
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");		
 		
