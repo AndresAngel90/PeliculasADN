@@ -1,19 +1,14 @@
 package com.ceiba.serviciosPeliculas.dominio.servicio.pelicula;
 
-import java.io.Console;
-import java.sql.Time;
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +18,7 @@ import com.ceiba.serviciosPeliculas.dominio.repositorio.AlquilerRepository;
 @Component
 public class ServicioAlquilerPeliculas {
 	
-	private static final Logger LOG = LogManager.getLogger(ServicioAlquilerPeliculas.class);
+	
 	
 	@Autowired
 	private AlquilerRepository alquilerRepository;
@@ -37,11 +32,13 @@ public class ServicioAlquilerPeliculas {
 		
 		AlquilerDTO alquilerDTO =  new AlquilerDTO();
 		
+		Date fechaActual = new Date();
+		
 		alquilerDTO = alquilerRepository.alquilerInfo(idPelicula);
 		
 		alquilerDTO.setTarifa(calculoTarifa(alquilerDTO.getFechaEstrenoAlquiler()));
 		
-		alquilerDTO.setFechaDevolucion(calculoFechaDevolucion());
+		alquilerDTO.setFechaDevolucion(calculoFechaDevolucion(fechaActual));
 		
 		return alquilerDTO;
 	}
@@ -80,11 +77,10 @@ public class ServicioAlquilerPeliculas {
 		
 	}
 	
-	public String calculoFechaDevolucion() {
+	public String calculoFechaDevolucion(Date fechaActual) {
 		
-		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");		
 		
-		Date fechaActual = new Date();
 		Calendar fechaEntrega = Calendar.getInstance();
 		fechaEntrega.add(Calendar.DATE, 7);
 		
