@@ -1,11 +1,12 @@
 package com.ceiba.servicios_peliculas.dominio.repositorio;
 
-import com.ceiba.servicios_peliculas.dominio.dto.AlquilerDTO;
+import com.ceiba.servicios_peliculas.dominio.Alquiler;
+import com.ceiba.servicios_peliculas.dominio.AlquilerInfo;
 
 public interface AlquilerRepository {
 	
-	AlquilerDTO alquilerInfo(Long peliculaCodigo);
+	AlquilerInfo alquilerInfo(Long peliculaCodigo);
 	
-	void alquilarPelicula(Long peliculaCodigo);
+	void alquilarPelicula(Alquiler alquiler);
 
 }

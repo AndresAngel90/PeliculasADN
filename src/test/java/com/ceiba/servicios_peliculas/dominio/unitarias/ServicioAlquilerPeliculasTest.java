@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.ceiba.servicios_peliculas.dominio.dto.AlquilerDTO;
+import com.ceiba.servicios_peliculas.dominio.AlquilerInfo;
 import com.ceiba.servicios_peliculas.dominio.repositorio.AlquilerRepository;
 import com.ceiba.servicios_peliculas.dominio.servicio.pelicula.ServicioAlquilerPeliculas;
 import com.ceiba.servicios_peliculas.testdatabuilder.TestDataBuilder;
@@ -35,11 +35,11 @@ public class ServicioAlquilerPeliculasTest {
 	@Test
 	public void getAlquilerInfoTest() {		
 		
-		AlquilerDTO alquilerDTO =  new TestDataBuilder().alquilerDtoBuilder();
+		AlquilerInfo alquilerDTO =  new TestDataBuilder().alquilerDtoBuilder();
 		
 		when(alquilerRepository.alquilerInfo(alquilerDTO.getIdPelicula())).thenReturn(alquilerDTO);			
 		
-		AlquilerDTO alquilerDTOResp = servicioAlquilerPeliculas.alquilarInfo(alquilerDTO.getIdPelicula());
+		AlquilerInfo alquilerDTOResp = servicioAlquilerPeliculas.alquilarInfo(alquilerDTO.getIdPelicula());
 		assertTrue(alquilerDTOResp.getIdPelicula() == alquilerDTOResp.getIdPelicula());
 		
 	}

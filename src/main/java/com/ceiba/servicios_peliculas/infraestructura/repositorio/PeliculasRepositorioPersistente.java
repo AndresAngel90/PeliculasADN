@@ -8,15 +8,17 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 
-import com.ceiba.servicios_peliculas.dominio.dto.PeliculaDTO;
+import com.ceiba.servicios_peliculas.dominio.Pelicula;
 import com.ceiba.servicios_peliculas.dominio.repositorio.PeliculasRepository;
-import com.ceiba.servicios_peliculas.infraestructura.persistencia.builder.PeliculaDTOBuilder;
+import com.ceiba.servicios_peliculas.infraestructura.persistencia.builder.PeliculaBuilder;
 import com.ceiba.servicios_peliculas.infraestructura.persistencia.entidad.PeliculaEntity;
 
 @Repository("peliculasRepositorioPersistente")
 public class PeliculasRepositorioPersistente implements PeliculasRepository {
 	
-	private final static String FIND_PELICULAS_DISPONIBLES = "Pelicula.listar";
+	private static final  String FIND_PELICULAS_DISPONIBLES = "Pelicula.listar";
+	private static final  String FIDN_PELICULA_BY_ID = "Pelicula.byID";
+	private static final String ID_PELICULA = "idPelicula";
 	
 	private final EntityManager entityManager;
 	
@@ -27,23 +29,32 @@ public class PeliculasRepositorioPersistente implements PeliculasRepository {
 	}
 
 	@Override
-	public List<PeliculaDTO> obtenerListaPeliculasDisponibles() {
+	public List<Pelicula> obtenerListaPeliculasDisponibles() {		
+		 
 		
-		List<PeliculaEntity> listaPeliculas = new ArrayList<PeliculaEntity>();
-		
-		List<PeliculaDTO> listaPeliculasDTO = new ArrayList<PeliculaDTO>();
+		List<Pelicula> listaPeliculasDTO = new ArrayList<>();
 		
 		Query query = entityManager.createNamedQuery(FIND_PELICULAS_DISPONIBLES);
 		
-		listaPeliculas = query.getResultList();
+		List<PeliculaEntity> listaPeliculas = query.getResultList();
 		
 		for (PeliculaEntity peliculaEntity : listaPeliculas) {
 			
-			listaPeliculasDTO.add(PeliculaDTOBuilder.convertirPeliculaEntity(peliculaEntity));
+			listaPeliculasDTO.add(PeliculaBuilder.convertirPeliculaEntity(peliculaEntity));
 			
 		}
 		
 		return listaPeliculasDTO;
+	}
+
+	@Override
+	public Pelicula obtenerPeliculaByID(long idPelicula) {	
+		
+		Query query = entityManager.createNamedQuery(FIDN_PELICULA_BY_ID);
+		query.setParameter(ID_PELICULA, idPelicula);
+		PeliculaEntity peliculaEntity = (PeliculaEntity) query.getSingleResult();		
+		
+		return PeliculaBuilder.convertirPeliculaEntity(peliculaEntity);
 	}
 
 }

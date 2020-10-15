@@ -3,8 +3,8 @@ package com.ceiba.servicios_peliculas.testdatabuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ceiba.servicios_peliculas.dominio.dto.AlquilerDTO;
-import com.ceiba.servicios_peliculas.dominio.dto.PeliculaDTO;
+import com.ceiba.servicios_peliculas.dominio.AlquilerInfo;
+import com.ceiba.servicios_peliculas.dominio.Pelicula;
 
 public class TestDataBuilder {
 	
@@ -32,30 +32,17 @@ public class TestDataBuilder {
 		this.fechaDevolucion = FECHADEVOLUCION;
 	}
 	
-	public AlquilerDTO alquilerDtoBuilder() {
+	public AlquilerInfo alquilerDtoBuilder() {
 		
-		AlquilerDTO alquilerDTO = new AlquilerDTO();
-		
-		alquilerDTO.setIdPelicula(this.idPelicula);
-		alquilerDTO.setNombrePelicula(this.nombrePelicula);
-		alquilerDTO.setFechaEstrenoAlquiler(this.fechaEstreno);
-		alquilerDTO.setUrlImagen(this.imgUrl);
-		alquilerDTO.setTarifa(this.tarifa);
-		alquilerDTO.setFechaDevolucion(this.fechaDevolucion);
-		return alquilerDTO;
+		return new AlquilerInfo(this.idPelicula, this.nombrePelicula, this.fechaEstreno, this.imgUrl, this.tarifa, this.fechaDevolucion);
 		
 	}
 	
-public List<PeliculaDTO> listaPeliculas() {
+public List<Pelicula> listaPeliculas() {
 		
-		List<PeliculaDTO> listaPeliculas = new ArrayList<PeliculaDTO>();
+		List<Pelicula> listaPeliculas = new ArrayList<Pelicula>();
 	
-		PeliculaDTO peliculaDTO = new PeliculaDTO();
-		
-		peliculaDTO.setPeliculaID(this.idPelicula);
-		peliculaDTO.setTituloPelicula(this.nombrePelicula);
-		peliculaDTO.setFechaEstreno(this.fechaEstreno);
-		peliculaDTO.setUrlImagen(this.imgUrl);
+		Pelicula peliculaDTO = new Pelicula(this.idPelicula, this.nombrePelicula, this.fechaEstreno, this.imgUrl);
 		
 		listaPeliculas.add(peliculaDTO);
 		

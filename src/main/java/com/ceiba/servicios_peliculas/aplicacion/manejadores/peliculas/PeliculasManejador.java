@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.ceiba.servicios_peliculas.dominio.dto.PeliculaDTO;
+import com.ceiba.servicios_peliculas.dominio.Pelicula;
 import com.ceiba.servicios_peliculas.dominio.servicio.pelicula.ServicioObtenerPelicula;
 
 
@@ -18,7 +18,7 @@ public class PeliculasManejador{
 		this.servicioObtenerPelicula = servicioObtenerPelicula;
 	}
 	
-	public List<PeliculaDTO> obtenerPeliculas() {
+	public List<Pelicula> obtenerPeliculas() {
 		
 		return this.servicioObtenerPelicula.obtenerPeliculas();
 	}

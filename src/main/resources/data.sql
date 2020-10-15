@@ -1,14 +1,19 @@
-INSERT INTO peliculas(ID, NOMBRE, FECHA_ESTRENO, STOCK, IMAGE_URL)
-VALUES (10, 'Matrix', '21/05/1999', 7, 'alguna img');
+INSERT INTO peliculas(ID, NOMBRE, FECHA_ESTRENO, STOCK, STOCK_INICIAL, IMAGE_URL)
+VALUES (10, 'Matrix', '21/05/1999', 7, 7, 'alguna img');
 
-INSERT INTO peliculas(ID, NOMBRE, FECHA_ESTRENO, STOCK, IMAGE_URL)
-VALUES (20, 'Matrix Reloaded', '07/05/2003', 7, 'alguna img');
+INSERT INTO peliculas(ID, NOMBRE, FECHA_ESTRENO, STOCK, STOCK_INICIAL, IMAGE_URL)
+VALUES (20, 'Matrix Reloaded', '07/05/2003', 7,  8,'alguna img');
 
-INSERT INTO peliculas(ID, NOMBRE, FECHA_ESTRENO, STOCK, IMAGE_URL)
-VALUES (30, 'Matrix Revolutions', '27/10/2003', 7, 'alguna img');
+INSERT INTO peliculas(ID, NOMBRE, FECHA_ESTRENO, STOCK, STOCK_INICIAL, IMAGE_URL)
+VALUES (30, 'Matrix Revolutions', '27/10/2003', 10, 10, 'alguna img');
 
-INSERT INTO peliculas(ID, NOMBRE, FECHA_ESTRENO, STOCK, IMAGE_URL)
-VALUES (40, 'Wonder Woman 1984', '10/05/2020', 4, 'alguna img');
+INSERT INTO peliculas(ID, NOMBRE, FECHA_ESTRENO, STOCK, STOCK_INICIAL, IMAGE_URL)
+VALUES (40, 'Wonder Woman 1984', '10/05/2020', 4, 4, 'alguna img');
 
-INSERT INTO peliculas(ID, NOMBRE, FECHA_ESTRENO, STOCK, IMAGE_URL)
-VALUES (50, 'Justice League The Snyder cut', '07/10/2020', 2, 'alguna img');
+INSERT INTO peliculas(ID, NOMBRE, FECHA_ESTRENO, STOCK, STOCK_INICIAL, IMAGE_URL)
+VALUES (50, 'Justice League The Snyder cut', '07/10/2020', 2, 2, 'alguna img');
+
+
+INSERT INTO alquiler(ID, ID_PELICULA, FECHA_DEVOLUCION, VALOR_ALQUILER, ESTADO_ALQUILER)
+VALUES (105, 20, '21/10/2020', 5000, 'A');
+

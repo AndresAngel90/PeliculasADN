@@ -34,6 +34,9 @@ public class PeliculaEntity {
 	@Column(name = "STOCK")
 	private Integer stock;
 	
+	@Column(name = "STOCK_INICIAL")
+	private Integer stockInicial;
+	
 	@Column(name = "IMAGE_URL")
 	private String imageUrl;
 

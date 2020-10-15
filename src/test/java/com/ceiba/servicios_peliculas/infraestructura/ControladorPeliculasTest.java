@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
@@ -22,12 +21,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ControladorPeliculasTest {
 	
 	public static final long CODIGO_PELICULA_10 = 10l;
+	public static final String FECHA_DEVOLUCION = "22/10/2020";
+	public static final int TARIFA = 7500;
 	
 	@Autowired
     private MockMvc mvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
     
     @Test
     public void getListaPeliculasTest()throws Exception {
@@ -36,7 +34,8 @@ public class ControladorPeliculasTest {
                 .get("/peliculas/obtenerListaPeliculas")
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").isArray());
     	
     	
     }
@@ -45,7 +44,7 @@ public class ControladorPeliculasTest {
     public void getAlquilerByID()throws Exception {
     	
     	mvc.perform(MockMvcRequestBuilders
-                .get("/peliculas/obtenerAlquilerInfo/peliculaId/{id}",CODIGO_PELICULA_10)
+                .get("/alquiler/obtenerAlquilerInfo/peliculaId/{id}",CODIGO_PELICULA_10)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -58,7 +57,7 @@ public class ControladorPeliculasTest {
     public void alquilarById()throws Exception {
     	
     	mvc.perform(MockMvcRequestBuilders
-                .get("/peliculas/alquilar/peliculaId/{id}",CODIGO_PELICULA_10)
+                .get("/alquiler/alquilar/peliculaId/{id}/fechaDevolucion/{fechaDevolucion}/tarifa/{tarfia}",CODIGO_PELICULA_10, FECHA_DEVOLUCION, TARIFA)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());

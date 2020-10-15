@@ -6,33 +6,34 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
-import java.util.Date;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import com.ceiba.servicios_peliculas.dominio.dto.AlquilerDTO;
+import com.ceiba.servicios_peliculas.dominio.Alquiler;
+import com.ceiba.servicios_peliculas.dominio.AlquilerInfo;
+import com.ceiba.servicios_peliculas.dominio.Pelicula;
 import com.ceiba.servicios_peliculas.dominio.repositorio.AlquilerRepository;
+import com.ceiba.servicios_peliculas.dominio.repositorio.PeliculasRepository;
 
-@Component
 public class ServicioAlquilerPeliculas {
 	
+	private final AlquilerRepository alquilerRepository;
 	
+	private final PeliculasRepository peliculasRepository;
 	
-	@Autowired
-	private AlquilerRepository alquilerRepository;
+	public ServicioAlquilerPeliculas(AlquilerRepository alquilerRepository, PeliculasRepository peliculasRepository) {
+		
+		this.alquilerRepository = alquilerRepository;
+		this.peliculasRepository = peliculasRepository;
+		
+	}
 	
 	private static final int TARIFA = 5000;
 	private static final int TARIFA6MESES = 2500;
 	private static final int TARIFA3MESES = 5000;
 	
 	
-	public AlquilerDTO alquilarInfo(long idPelicula) {
+	public AlquilerInfo alquilarInfo(long idPelicula) {
 		
-		AlquilerDTO alquilerDTO =  new AlquilerDTO();
-		
-		alquilerDTO = alquilerRepository.alquilerInfo(idPelicula);
+		AlquilerInfo alquilerDTO = alquilerRepository.alquilerInfo(idPelicula);
 		
 		alquilerDTO.setTarifa(calculoTarifa(alquilerDTO.getFechaEstrenoAlquiler()));
 		
@@ -42,9 +43,11 @@ public class ServicioAlquilerPeliculas {
 	}
 	
 	
-	public void alquilar(long idPelicula) {
+	public void alquilar(long idPelicula, String fechaDevolucion, int tarifa) {
 		
-		alquilerRepository.alquilarPelicula(idPelicula);
+		Pelicula pelicula = peliculasRepository.obtenerPeliculaByID(idPelicula);
+		Alquiler alquiler =  new Alquiler(pelicula, tarifa, fechaDevolucion);
+		alquilerRepository.alquilarPelicula(alquiler);
 	}
 	
 	public int calculoTarifa(String fechaEstreno) {
