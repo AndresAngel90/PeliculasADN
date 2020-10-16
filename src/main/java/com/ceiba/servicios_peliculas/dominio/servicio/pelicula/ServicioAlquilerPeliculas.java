@@ -10,10 +10,13 @@ import java.util.Calendar;
 import com.ceiba.servicios_peliculas.dominio.Alquiler;
 import com.ceiba.servicios_peliculas.dominio.AlquilerInfo;
 import com.ceiba.servicios_peliculas.dominio.Pelicula;
+import com.ceiba.servicios_peliculas.dominio.excepcion.AlquilerExcepcion;
 import com.ceiba.servicios_peliculas.dominio.repositorio.AlquilerRepository;
 import com.ceiba.servicios_peliculas.dominio.repositorio.PeliculasRepository;
 
 public class ServicioAlquilerPeliculas {
+	
+	private static final String ERROR_ALQUILAR = "Hay un error al alquilar  por favor verifique el id de la película o si la pelicula sigue disponible";
 	
 	private final AlquilerRepository alquilerRepository;
 	
@@ -44,10 +47,17 @@ public class ServicioAlquilerPeliculas {
 	
 	
 	public void alquilar(long idPelicula, String fechaDevolucion, int tarifa) {
+		try {
+			
+			Pelicula pelicula = peliculasRepository.obtenerPeliculaByID(idPelicula);
+			Alquiler alquiler =  new Alquiler(pelicula, tarifa, fechaDevolucion);
+			alquilerRepository.alquilarPelicula(alquiler);
+			
+		} catch (Exception e) {
+			
+			throw new AlquilerExcepcion(ERROR_ALQUILAR);
+		}
 		
-		Pelicula pelicula = peliculasRepository.obtenerPeliculaByID(idPelicula);
-		Alquiler alquiler =  new Alquiler(pelicula, tarifa, fechaDevolucion);
-		alquilerRepository.alquilarPelicula(alquiler);
 	}
 	
 	public int calculoTarifa(String fechaEstreno) {

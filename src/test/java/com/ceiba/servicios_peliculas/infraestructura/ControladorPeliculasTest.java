@@ -11,6 +11,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.ceiba.servicios_peliculas.aplicacion.comando.ComandoAlquilerEjecutar;
+import com.ceiba.servicios_peliculas.testdatabuilder.TestDataBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,6 +30,9 @@ public class ControladorPeliculasTest {
 	
 	@Autowired
     private MockMvc mvc;
+	
+	@Autowired
+    private ObjectMapper objectMapper;
     
     @Test
     public void getListaPeliculasTest()throws Exception {
@@ -55,9 +62,11 @@ public class ControladorPeliculasTest {
     
     @Test
     public void alquilarById()throws Exception {
-    	
+    	ComandoAlquilerEjecutar comandoAlquilerEjecutar = new TestDataBuilder().crearComandoEjecutar();
     	mvc.perform(MockMvcRequestBuilders
-                .get("/alquiler/alquilar/peliculaId/{id}/fechaDevolucion/{fechaDevolucion}/tarifa/{tarfia}",CODIGO_PELICULA_10, FECHA_DEVOLUCION, TARIFA)
+                .post("/alquiler/alquilar")
+                .content(objectMapper.writeValueAsString(comandoAlquilerEjecutar))
+                .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());

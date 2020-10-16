@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ceiba.servicios_peliculas.dominio.Alquiler;
 import com.ceiba.servicios_peliculas.dominio.AlquilerInfo;
+import com.ceiba.servicios_peliculas.dominio.excepcion.AlquilerExcepcion;
 import com.ceiba.servicios_peliculas.dominio.repositorio.AlquilerRepository;
 import com.ceiba.servicios_peliculas.infraestructura.persistencia.builder.AlquilerIbuilder;
 import com.ceiba.servicios_peliculas.infraestructura.persistencia.entidad.AlquilerEntity;
@@ -15,6 +16,8 @@ import com.ceiba.servicios_peliculas.infraestructura.persistencia.entidad.Pelicu
 
 @Repository("alquilerReposiotorioPersistente")
 public class AlquilerReposiotorioPersistente implements AlquilerRepository {
+	
+	private static final String ERROR_GETPELICULA = "Hay un error al obtener su pelicula por favor verifique el id de la película o intente más tarde";
 	
 	private static final String FIND_PELICULSBYID = "Pelicula.byID";
 	
@@ -34,8 +37,16 @@ public class AlquilerReposiotorioPersistente implements AlquilerRepository {
 		Query query = entityManager.createNamedQuery(FIND_PELICULSBYID);
 		query.setParameter(ID_PELICULA, peliculaCodigo);
 		
-		PeliculaEntity peliculaEntity  = (PeliculaEntity) query.getSingleResult();		
-		return  AlquilerIbuilder.generarAlquilerDTO(peliculaEntity);
+		try {
+			
+			PeliculaEntity peliculaEntity  = (PeliculaEntity) query.getSingleResult();	
+			return  AlquilerIbuilder.generarAlquilerDTO(peliculaEntity);
+		} catch (Exception e) {
+			
+			throw new AlquilerExcepcion(ERROR_GETPELICULA);
+		}
+			
+		
 	}
 
 	@Override
@@ -45,12 +56,15 @@ public class AlquilerReposiotorioPersistente implements AlquilerRepository {
 		Query query = entityManager.createNamedQuery(FIND_PELICULSBYID);
 		query.setParameter(ID_PELICULA, alquiler.getPelicula().getPeliculaID());
 		
+		Query queryStock = entityManager.createNamedQuery(ALQUILAR_PELICULABYID);
+			
 		PeliculaEntity peliculaEntity = (PeliculaEntity) query.getSingleResult();		
 		AlquilerEntity alquilerEntity = AlquilerIbuilder.convertirAAlquilerEntity(alquiler, peliculaEntity);		
-		entityManager.persist(alquilerEntity);
+		entityManager.persist(alquilerEntity);			
 		
-		Query queryStock = entityManager.createNamedQuery(ALQUILAR_PELICULABYID);
 		queryStock.setParameter(ID_PELICULA, alquiler.getPelicula().getPeliculaID()).executeUpdate();
+			
+		
 		
 	
 	}

@@ -3,12 +3,14 @@ package com.ceiba.servicios_peliculas.testdatabuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ceiba.servicios_peliculas.aplicacion.comando.ComandoAlquilerEjecutar;
 import com.ceiba.servicios_peliculas.dominio.AlquilerInfo;
 import com.ceiba.servicios_peliculas.dominio.Pelicula;
 
 public class TestDataBuilder {
 	
 	private static final long IDPELICULA = 77l;	
+	private static final long IDPELICULADB = 10l;	
 	private static final String NOMBREPELICULA = "Star Wars Episodio V: El imperio Contraataca";	
 	private static final String FECHAESTRENO = "25/12/1980";	
 	private static final String IMGURL = "POSTER URL";
@@ -17,13 +19,14 @@ public class TestDataBuilder {
 	
 	
 	private long idPelicula;
+	private long idPeliculaDB;
 	private String fechaEstreno;
 	private String nombrePelicula;
 	private String imgUrl;
 	private int tarifa;
 	private String fechaDevolucion;
 	public TestDataBuilder() {
-		
+		this.idPeliculaDB = IDPELICULADB;
 		this.idPelicula = IDPELICULA;
 		this.nombrePelicula = NOMBREPELICULA;
 		this.fechaEstreno = FECHAESTRENO;
@@ -38,7 +41,7 @@ public class TestDataBuilder {
 		
 	}
 	
-public List<Pelicula> listaPeliculas() {
+	public List<Pelicula> listaPeliculas() {
 		
 		List<Pelicula> listaPeliculas = new ArrayList<Pelicula>();
 	
@@ -48,6 +51,10 @@ public List<Pelicula> listaPeliculas() {
 		
 		return listaPeliculas;
 		
+	}
+	
+	public ComandoAlquilerEjecutar crearComandoEjecutar() {
+		return new ComandoAlquilerEjecutar(this.idPeliculaDB, this.fechaDevolucion, this.tarifa);
 	}
 	
 
