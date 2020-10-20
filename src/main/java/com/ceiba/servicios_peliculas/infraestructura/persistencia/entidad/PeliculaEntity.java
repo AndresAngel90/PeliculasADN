@@ -39,6 +39,25 @@ public class PeliculaEntity {
 	
 	@Column(name = "IMAGE_URL")
 	private String imageUrl;
+	
+	@Column(name = "SINOPSIS")
+	private String sinopsis;
+
+	public Integer getStockInicial() {
+		return stockInicial;
+	}
+
+	public void setStockInicial(Integer stockInicial) {
+		this.stockInicial = stockInicial;
+	}
+
+	public String getSinopsis() {
+		return sinopsis;
+	}
+
+	public void setSinopsis(String sinopsis) {
+		this.sinopsis = sinopsis;
+	}
 
 	public long getId() {
 		return id;

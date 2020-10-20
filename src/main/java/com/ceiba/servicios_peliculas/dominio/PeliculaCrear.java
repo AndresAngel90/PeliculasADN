@@ -2,42 +2,38 @@ package com.ceiba.servicios_peliculas.dominio;
 
 import com.ceiba.servicios_peliculas.dominio.excepcion.PeliculaExcepcion;
 
-public class Pelicula {
+public class PeliculaCrear {
 	
-	private static final  String ERRORID = "el id no puede ser un valor negativo";
 	private static final  String FECHAERROR = "Hay error en la fecha por favor verifique";
 	private static final  String NOMBREPELICULAERROR = "El nombre de la pelicula es vacio o es mayor a 100 caracteres";
+	private static final  String STOCKINICIALERROR = "El stock inicial no puede ser igual a 0 o negativo";
+	private static final  String STOCKERROR = "El stock no puede ser mayor al stock inicial o negativo";
 	private static final  String URLERROR = "La url de la imagen es vacio o es mayor a 1000 caracteres";
 	private static final  String SINOPSISERROR = "La sinopsis de la pelicula es vacio o es mayor a 255 caracteres";
 	
-	private long peliculaID;
-	
-	private String tituloPelicula;
-	
+	private String nombre;
 	private String fechaEstreno;
-	
-	private String urlImagen;
-	
+	private Integer stock;
+	private Integer stockInicial;	
+	private String imageUrl;
 	private String sinopsis;
-
-	public Pelicula(long peliculaID, String tituloPelicula, String fechaEstreno, String urlImagen, String sinopsis) {
-		validarIdPelicula(peliculaID);
-		validaNombrePelicula(tituloPelicula);
+	
+	public PeliculaCrear(String nombre, String fechaEstreno, Integer stock, Integer stockInicial, String imageUrl,
+			String sinopsis) {
+		validaNombrePelicula(nombre);
 		validaFecha(fechaEstreno);
-		validaURLImg(urlImagen);
+		validaStockInicial(stockInicial);
+		validaStock(stock, stockInicial);
+		validaURLImg(imageUrl);
 		validaSinopsis(sinopsis);
-		this.peliculaID = peliculaID;
-		this.tituloPelicula = tituloPelicula;
+		this.nombre = nombre;
 		this.fechaEstreno = fechaEstreno;
-		this.urlImagen = urlImagen;
+		this.stock = stock;
+		this.stockInicial = stockInicial;
+		this.imageUrl = imageUrl;
 		this.sinopsis = sinopsis;
 	}
 	
-	private void validarIdPelicula(long id) {
-		if(id<0) {
-			throw new PeliculaExcepcion(ERRORID);
-		}
-	}
 	
 	private void validaFecha(String fecha) {
 		if(fecha == null || fecha.equals("")) {
@@ -48,6 +44,18 @@ public class Pelicula {
 	private void validaNombrePelicula(String nombrePelicula) {
 		if(nombrePelicula == null || nombrePelicula.equals("") || nombrePelicula.length()>100 ) {
 			throw new PeliculaExcepcion(NOMBREPELICULAERROR);
+		}
+	}
+	
+	private void validaStockInicial(int stock) {
+		if(stock <= 0) {
+			throw new PeliculaExcepcion(STOCKINICIALERROR);
+		}
+	}
+	
+	private void validaStock(int stock, int stockInicial) {
+		if(stock > stockInicial || stock < 0) {
+			throw new PeliculaExcepcion(STOCKERROR);
 		}
 	}
 	
@@ -62,26 +70,28 @@ public class Pelicula {
 			throw new PeliculaExcepcion(SINOPSISERROR);
 		}
 	}
-
-	public long getPeliculaID() {
-		return peliculaID;
+	
+	
+	public String getNombre() {
+		return nombre;
 	}
-
-	public String getTituloPelicula() {
-		return tituloPelicula;
-	}
-
 	public String getFechaEstreno() {
 		return fechaEstreno;
 	}
-
-	public String getUrlImagen() {
-		return urlImagen;
+	public Integer getStock() {
+		return stock;
 	}
-
+	public Integer getStockInicial() {
+		return stockInicial;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
 	public String getSinopsis() {
 		return sinopsis;
-	}	
+	}
 	
 	
+	
+
 }

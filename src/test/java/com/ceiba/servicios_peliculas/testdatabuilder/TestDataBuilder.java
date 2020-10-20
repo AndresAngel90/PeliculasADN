@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ceiba.servicios_peliculas.aplicacion.comando.ComandoAlquilerEjecutar;
+import com.ceiba.servicios_peliculas.aplicacion.comando.ComandoPelicula;
 import com.ceiba.servicios_peliculas.dominio.AlquilerInfo;
 import com.ceiba.servicios_peliculas.dominio.Pelicula;
 
@@ -16,7 +17,8 @@ public class TestDataBuilder {
 	private static final String IMGURL = "POSTER URL";
 	private static final int TARIFA = 7500;
 	private static final String FECHADEVOLUCION = "20/10/2020";
-	
+	private static final String SINOPSIS = "argumento de la pelicula";	
+	private static final int STOCK = 10;
 	
 	private long idPelicula;
 	private long idPeliculaDB;
@@ -25,6 +27,9 @@ public class TestDataBuilder {
 	private String imgUrl;
 	private int tarifa;
 	private String fechaDevolucion;
+	private String sinopsis;
+	private int stock;
+	
 	public TestDataBuilder() {
 		this.idPeliculaDB = IDPELICULADB;
 		this.idPelicula = IDPELICULA;
@@ -33,6 +38,8 @@ public class TestDataBuilder {
 		this.imgUrl = IMGURL;
 		this.tarifa = TARIFA;
 		this.fechaDevolucion = FECHADEVOLUCION;
+		this.sinopsis = SINOPSIS;
+		this.stock = STOCK;
 	}
 	
 	public AlquilerInfo alquilerDtoBuilder() {
@@ -45,7 +52,7 @@ public class TestDataBuilder {
 		
 		List<Pelicula> listaPeliculas = new ArrayList<Pelicula>();
 	
-		Pelicula peliculaDTO = new Pelicula(this.idPelicula, this.nombrePelicula, this.fechaEstreno, this.imgUrl);
+		Pelicula peliculaDTO = new Pelicula(this.idPelicula, this.nombrePelicula, this.fechaEstreno, this.imgUrl, this.sinopsis);
 		
 		listaPeliculas.add(peliculaDTO);
 		
@@ -55,6 +62,11 @@ public class TestDataBuilder {
 	
 	public ComandoAlquilerEjecutar crearComandoEjecutar() {
 		return new ComandoAlquilerEjecutar(this.idPeliculaDB, this.fechaDevolucion, this.tarifa);
+	}
+	
+	public ComandoPelicula crearComandoPelicula() {
+		return new ComandoPelicula(this.nombrePelicula, this.fechaEstreno, this.stock, this.stock, this.imgUrl, this.sinopsis);
+		
 	}
 	
 

@@ -7,6 +7,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.ceiba.servicios_peliculas.dominio.Alquiler;
 import com.ceiba.servicios_peliculas.dominio.AlquilerInfo;
 import com.ceiba.servicios_peliculas.dominio.Pelicula;
@@ -21,6 +24,8 @@ public class ServicioAlquilerPeliculas {
 	private final AlquilerRepository alquilerRepository;
 	
 	private final PeliculasRepository peliculasRepository;
+	
+	private static final Logger LOG = LogManager.getLogger(ServicioAlquilerPeliculas.class);
 	
 	public ServicioAlquilerPeliculas(AlquilerRepository alquilerRepository, PeliculasRepository peliculasRepository) {
 		
@@ -53,8 +58,8 @@ public class ServicioAlquilerPeliculas {
 			Alquiler alquiler =  new Alquiler(pelicula, tarifa, fechaDevolucion);
 			alquilerRepository.alquilarPelicula(alquiler);
 			
-		} catch (Exception e) {
-			
+		} catch (AlquilerExcepcion e) {
+			LOG.error("ERROR:", e);
 			throw new AlquilerExcepcion(ERROR_ALQUILAR);
 		}
 		
