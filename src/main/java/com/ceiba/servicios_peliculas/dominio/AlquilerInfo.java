@@ -52,19 +52,19 @@ public class AlquilerInfo {
 	}
 	
 	private void validaFecha(String fecha) {
-		if(fecha.equals("")) {
+		if(("").equals(fecha)) {
 			throw new PeliculaExcepcion(FECHAERROR);
 		}
 	}
 	
 	private void validaNombrePelicula(String nombrePelicula) {
-		if(nombrePelicula.equals("") || nombrePelicula.length()>100 ) {
+		if(("").equals(nombrePelicula) || nombrePelicula.length()>100 ) {
 			throw new PeliculaExcepcion(NOMBREPELICULAERROR);
 		}
 	}
 	
 	private void validaURLImg(String url) {
-		if(url.equals("") || url.length()>1000 ) {
+		if(("").equals(url) || url.length()>1000 ) {
 			throw new PeliculaExcepcion(URLERROR);
 		}
 	}

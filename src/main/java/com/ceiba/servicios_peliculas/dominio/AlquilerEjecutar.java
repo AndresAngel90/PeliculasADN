@@ -25,7 +25,7 @@ public class AlquilerEjecutar {
 	}
 	
 	private void validaFecha(String fecha) {
-		if(fecha.equals("")) {
+		if(("").equals(fecha)) {
 			throw new PeliculaExcepcion(FECHAERROR);
 		}
 	}

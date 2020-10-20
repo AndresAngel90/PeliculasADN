@@ -60,13 +60,13 @@ public class PeliculaCrear {
 	}
 	
 	private void validaURLImg(String url) {
-		if(url.equals("") || url.length()>1000 ) {
+		if(("").equals(url) || url.length()>1000 ) {
 			throw new PeliculaExcepcion(URLERROR);
 		}
 	}
 	
 	private void validaSinopsis(String sinopsis) {
-		if(sinopsis.equals("") || sinopsis.length()>255 ) {
+		if(("").equals(sinopsis) || sinopsis.length()>255 ) {
 			throw new PeliculaExcepcion(SINOPSISERROR);
 		}
 	}
