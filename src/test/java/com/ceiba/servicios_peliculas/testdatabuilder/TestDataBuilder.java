@@ -11,7 +11,7 @@ import com.ceiba.servicios_peliculas.dominio.Pelicula;
 public class TestDataBuilder {
 	
 	private static final long IDPELICULA = 77l;	
-	private static final long IDPELICULADB = 10l;	
+	private static final long IDPELICULADB = 501l;	
 	private static final String NOMBREPELICULA = "Star Wars Episodio V: El imperio Contraataca";	
 	private static final String FECHAESTRENO = "25/12/1980";	
 	private static final String IMGURL = "POSTER URL";
@@ -19,6 +19,7 @@ public class TestDataBuilder {
 	private static final String FECHADEVOLUCION = "20/10/2020";
 	private static final String SINOPSIS = "argumento de la pelicula";	
 	private static final int STOCK = 10;
+	public static final long CODIGO_PELICULA_NEG = -501l;
 	
 	private long idPelicula;
 	private long idPeliculaDB;
@@ -29,6 +30,7 @@ public class TestDataBuilder {
 	private String fechaDevolucion;
 	private String sinopsis;
 	private int stock;
+	private long codigoPeliculaNeg;
 	
 	public TestDataBuilder() {
 		this.idPeliculaDB = IDPELICULADB;
@@ -40,6 +42,7 @@ public class TestDataBuilder {
 		this.fechaDevolucion = FECHADEVOLUCION;
 		this.sinopsis = SINOPSIS;
 		this.stock = STOCK;
+		this.codigoPeliculaNeg = CODIGO_PELICULA_NEG;
 	}
 	
 	public AlquilerInfo alquilerDtoBuilder() {
@@ -66,6 +69,38 @@ public class TestDataBuilder {
 	
 	public ComandoPelicula crearComandoPelicula() {
 		return new ComandoPelicula(this.nombrePelicula, this.fechaEstreno, this.stock, this.stock, this.imgUrl, this.sinopsis);
+		
+	}
+	
+	public ComandoAlquilerEjecutar tarifaComandoError() {
+		return new ComandoAlquilerEjecutar(this.idPeliculaDB, this.fechaDevolucion, 4000);
+	}
+	
+	public ComandoAlquilerEjecutar crearNegComandoEjecutar() {
+		return new ComandoAlquilerEjecutar(this.codigoPeliculaNeg, this.fechaDevolucion, this.tarifa);
+	}
+	
+	public ComandoAlquilerEjecutar fechaComandoError() {
+		return new ComandoAlquilerEjecutar(this.idPeliculaDB, "", this.tarifa);
+	}
+	
+	public ComandoPelicula peliculaComandoErrorNombre() {
+		return new ComandoPelicula("", this.fechaEstreno, this.stock, this.stock, this.imgUrl, this.sinopsis);
+		
+	}
+	
+	public ComandoPelicula peliculaComandoErrorfecha() {
+		return new ComandoPelicula(this.nombrePelicula, "", this.stock, this.stock, this.imgUrl, this.sinopsis);
+		
+	}
+	
+	public ComandoPelicula peliculaComandoErrorStockInicial() {
+		return new ComandoPelicula(this.nombrePelicula, this.fechaEstreno, 7, 0, this.imgUrl, this.sinopsis);
+		
+	}
+	
+	public ComandoPelicula peliculaComandoErrorStock() {
+		return new ComandoPelicula(this.nombrePelicula, this.fechaEstreno, 7, 5, this.imgUrl, this.sinopsis);
 		
 	}
 	

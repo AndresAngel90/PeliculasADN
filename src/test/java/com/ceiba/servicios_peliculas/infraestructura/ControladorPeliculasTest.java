@@ -25,12 +25,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 public class ControladorPeliculasTest {
 	
-	public static final long CODIGO_PELICULA_10 = 10l;
+	public static final long CODIGO_PELICULA_10 = 501l;
 	public static final long CODIGO_PELICULA_70 = 70l;
 	public static final String FECHA_DEVOLUCION = "22/10/2020";
 	public static final int TARIFA = 7500;
 	public static final String ALQUILERXCEPTION = "AlquilerExcepcion";
 	public static final String EXCPTIONNOCONTROLADA = "Ocurrió un error por favor intente más tarde";
+	public static final String ERRORIDNEG ="el id no puede ser un valor negativo";
+	public static final String ERRORTARIFA = "Hay error en la tarífa por favor verifique";
+	public static final String ERRORFECHA= "Hay error en la fecha por favor verifique";
+	private static final  String NOMBREPELICULAERROR = "El nombre de la pelicula es vacio o es mayor a 100 caracteres";
+	private static final  String STOCKINICIALERROR = "El stock inicial no puede ser igual a 0 o negativo";
+	private static final  String STOCKERROR = "El stock no puede ser mayor al stock inicial o negativo";
 	
 	@Autowired
     private MockMvc mvc;
@@ -115,6 +121,108 @@ public class ControladorPeliculasTest {
                 .andDo(print())
                 .andExpect(status().is(400))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nombreExcepcion").value(ALQUILERXCEPTION));
+    	
+    }
+    
+    @Test
+    public void alquilarByIdError()throws Exception {
+    	ComandoAlquilerEjecutar comandoAlquilerEjecutar = new TestDataBuilder().crearNegComandoEjecutar();
+    	mvc.perform(MockMvcRequestBuilders
+                .post("/alquiler/alquilar")
+                .content(objectMapper.writeValueAsString(comandoAlquilerEjecutar))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is(400))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensaje").value(ERRORIDNEG));
+    	
+    	
+    }
+    
+    @Test
+    public void tarifaError()throws Exception {
+    	ComandoAlquilerEjecutar comandoAlquilerEjecutar = new TestDataBuilder().tarifaComandoError();
+    	mvc.perform(MockMvcRequestBuilders
+                .post("/alquiler/alquilar")
+                .content(objectMapper.writeValueAsString(comandoAlquilerEjecutar))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is(400))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensaje").value(ERRORTARIFA));
+    	
+    	
+    }
+    
+    @Test
+    public void fechaError()throws Exception {
+    	ComandoAlquilerEjecutar comandoAlquilerEjecutar = new TestDataBuilder().fechaComandoError();
+    	mvc.perform(MockMvcRequestBuilders
+                .post("/alquiler/alquilar")
+                .content(objectMapper.writeValueAsString(comandoAlquilerEjecutar))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is(400))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensaje").value(ERRORFECHA));
+    	
+    	
+    }
+    
+    @Test
+    public void agregarNombreError()throws Exception {
+    	ComandoPelicula comandoPelicula = new TestDataBuilder().peliculaComandoErrorNombre();
+    	mvc.perform(MockMvcRequestBuilders
+                .post("/peliculas/agregar")
+                .content(objectMapper.writeValueAsString(comandoPelicula))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is(400))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensaje").value(NOMBREPELICULAERROR));
+    	
+    }
+    
+    @Test
+    public void agregarFechaError()throws Exception {
+    	ComandoPelicula comandoPelicula = new TestDataBuilder().peliculaComandoErrorfecha();
+    	mvc.perform(MockMvcRequestBuilders
+                .post("/peliculas/agregar")
+                .content(objectMapper.writeValueAsString(comandoPelicula))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is(400))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensaje").value(ERRORFECHA));
+    	
+    }
+    
+    @Test
+    public void agregarStockErrorInicial()throws Exception {
+    	ComandoPelicula comandoPelicula = new TestDataBuilder().peliculaComandoErrorStockInicial();
+    	mvc.perform(MockMvcRequestBuilders
+                .post("/peliculas/agregar")
+                .content(objectMapper.writeValueAsString(comandoPelicula))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is(400))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensaje").value(STOCKINICIALERROR));
+    	
+    }
+    
+    @Test
+    public void agregarStockError()throws Exception {
+    	ComandoPelicula comandoPelicula = new TestDataBuilder().peliculaComandoErrorStock();
+    	mvc.perform(MockMvcRequestBuilders
+                .post("/peliculas/agregar")
+                .content(objectMapper.writeValueAsString(comandoPelicula))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is(400))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensaje").value(STOCKERROR));
+    	
     	
     }
 
