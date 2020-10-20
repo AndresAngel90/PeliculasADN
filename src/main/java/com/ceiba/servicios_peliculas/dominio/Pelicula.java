@@ -40,25 +40,25 @@ public class Pelicula {
 	}
 	
 	private void validaFecha(String fecha) {
-		if(fecha == null || fecha.equals("")) {
+		if(fecha.equals("")) {
 			throw new PeliculaExcepcion(FECHAERROR);
 		}
 	}
 	
 	private void validaNombrePelicula(String nombrePelicula) {
-		if(nombrePelicula == null || nombrePelicula.equals("") || nombrePelicula.length()>100 ) {
+		if(nombrePelicula.equals("") || nombrePelicula.length()>100 ) {
 			throw new PeliculaExcepcion(NOMBREPELICULAERROR);
 		}
 	}
 	
 	private void validaURLImg(String url) {
-		if(url == null || url.equals("") || url.length()>1000 ) {
+		if(url.equals("") || url.length()>1000 ) {
 			throw new PeliculaExcepcion(URLERROR);
 		}
 	}
 	
 	private void validaSinopsis(String sinopsis) {
-		if(sinopsis == null || sinopsis.equals("") || sinopsis.length()>255 ) {
+		if(sinopsis.equals("") || sinopsis.length()>255 ) {
 			throw new PeliculaExcepcion(SINOPSISERROR);
 		}
 	}
