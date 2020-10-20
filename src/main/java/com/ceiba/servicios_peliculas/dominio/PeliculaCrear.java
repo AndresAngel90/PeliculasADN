@@ -36,13 +36,13 @@ public class PeliculaCrear {
 	
 	
 	private void validaFecha(String fecha) {
-		if(fecha == null || fecha.equals("")) {
+		if(("").equals(fecha)) {
 			throw new PeliculaExcepcion(FECHAERROR);
 		}
 	}
 	
 	private void validaNombrePelicula(String nombrePelicula) {
-		if(nombrePelicula.equals("") || nombrePelicula.length()>100 ) {
+		if(("").equals(nombrePelicula) || nombrePelicula.length()>100 ) {
 			throw new PeliculaExcepcion(NOMBREPELICULAERROR);
 		}
 	}
