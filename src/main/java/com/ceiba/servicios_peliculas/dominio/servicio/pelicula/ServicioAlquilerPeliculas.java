@@ -58,7 +58,7 @@ public class ServicioAlquilerPeliculas {
 			Alquiler alquiler =  new Alquiler(pelicula, tarifa, fechaDevolucion);
 			alquilerRepository.alquilarPelicula(alquiler);
 			
-		} catch (AlquilerExcepcion e) {
+		} catch (Exception e) {
 			LOG.error("ERROR:", e);
 			throw new AlquilerExcepcion(ERROR_ALQUILAR);
 		}
