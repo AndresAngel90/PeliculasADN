@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ceiba.servicios_peliculas.dominio.Pelicula;
 import com.ceiba.servicios_peliculas.dominio.PeliculaCrear;
+import com.ceiba.servicios_peliculas.dominio.excepcion.AlquilerExcepcion;
 import com.ceiba.servicios_peliculas.dominio.excepcion.PeliculaExcepcion;
 import com.ceiba.servicios_peliculas.dominio.repositorio.PeliculasRepository;
 import com.ceiba.servicios_peliculas.infraestructura.persistencia.builder.PeliculaBuilder;
@@ -20,7 +21,7 @@ import com.ceiba.servicios_peliculas.infraestructura.persistencia.entidad.Pelicu
 
 @Repository("peliculasRepositorioPersistente")
 public class PeliculasRepositorioPersistenteH2 implements PeliculasRepository {
-	
+	private static final  String ERROR_ALQUILAR = "Hay un error al alquilar  por favor verifique el id de la película o si la pelicula sigue disponible";
 	private static final  String NO_HAY_PELICULAS_DISPONIBLES = "No hay películas disponibles Para mostrar por favor intente mas tarde";
 	private static final  String FIND_PELICULAS_DISPONIBLES = "Pelicula.listar";
 	private static final  String FIDN_PELICULA_BY_ID = "Pelicula.byID";
@@ -71,11 +72,21 @@ public class PeliculasRepositorioPersistenteH2 implements PeliculasRepository {
 	}
 
 	@Override
-	public Pelicula obtenerPeliculaByID(long idPelicula) {	
+	public Pelicula obtenerPeliculaByID(long idPelicula) {
 		
-		Query query = entityManager.createNamedQuery(FIDN_PELICULA_BY_ID);
-		query.setParameter(ID_PELICULA, idPelicula);
-		PeliculaEntity peliculaEntity = (PeliculaEntity) query.getSingleResult();		
+		PeliculaEntity peliculaEntity = new PeliculaEntity();
+		try {
+			
+			Query query = entityManager.createNamedQuery(FIDN_PELICULA_BY_ID);
+			query.setParameter(ID_PELICULA, idPelicula);
+			peliculaEntity = (PeliculaEntity) query.getSingleResult();
+		} catch (Exception e) {
+			
+			LOG.error("ERROR:", e);
+			throw new AlquilerExcepcion(ERROR_ALQUILAR);
+		}
+		
+				
 		
 		return PeliculaBuilder.convertirPeliculaEntity(peliculaEntity);
 	}

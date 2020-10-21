@@ -7,25 +7,19 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.ceiba.servicios_peliculas.dominio.Alquiler;
 import com.ceiba.servicios_peliculas.dominio.AlquilerInfo;
 import com.ceiba.servicios_peliculas.dominio.Pelicula;
-import com.ceiba.servicios_peliculas.dominio.excepcion.AlquilerExcepcion;
 import com.ceiba.servicios_peliculas.dominio.repositorio.AlquilerRepository;
 import com.ceiba.servicios_peliculas.dominio.repositorio.PeliculasRepository;
 
 public class ServicioAlquilerPeliculas {
 	
-	private static final String ERROR_ALQUILAR = "Hay un error al alquilar  por favor verifique el id de la película o si la pelicula sigue disponible";
 	
 	private final AlquilerRepository alquilerRepository;
 	
-	private final PeliculasRepository peliculasRepository;
+	private final PeliculasRepository peliculasRepository;	
 	
-	private static final Logger LOG = LogManager.getLogger(ServicioAlquilerPeliculas.class);
 	
 	public ServicioAlquilerPeliculas(AlquilerRepository alquilerRepository, PeliculasRepository peliculasRepository) {
 		
@@ -52,16 +46,11 @@ public class ServicioAlquilerPeliculas {
 	
 	
 	public void alquilar(long idPelicula, String fechaDevolucion, int tarifa) {
-		try {
+		
 			
 			Pelicula pelicula = peliculasRepository.obtenerPeliculaByID(idPelicula);
 			Alquiler alquiler =  new Alquiler(pelicula, tarifa, fechaDevolucion);
 			alquilerRepository.alquilarPelicula(alquiler);
-			
-		} catch (Exception e) {
-			LOG.error("ERROR:", e);
-			throw new AlquilerExcepcion(ERROR_ALQUILAR);
-		}
 		
 	}
 	
